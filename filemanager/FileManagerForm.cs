@@ -1,8 +1,8 @@
 ﻿using System;
 using System.Collections.Generic;
 using System.IO;
-using System.Linq;
 using System.Windows.Forms;
+using System.Windows.Forms.VisualStyles;
 
 namespace filemanager
 {
@@ -34,12 +34,13 @@ namespace filemanager
         private void dataGridView1_CellDoubleClick(object sender, DataGridViewCellEventArgs e)
         {
             setStacks();
+            eFileType fileType = isCurrentPathAFolder(m_currentPath);
 
-            if (isCurrentPathAFolder())
+            if (fileType == eFileType.Folder)
             {
                 fillDataGridView(Directory.GetFileSystemEntries(m_currentPath, "*", SearchOption.TopDirectoryOnly));
             }
-            else
+            else if (fileType == eFileType.File)
             {
                 System.Diagnostics.Process.Start(m_currentPath);
             }
@@ -67,9 +68,7 @@ namespace filemanager
             if (r_pastStack.Count <= 0) return;
 
             r_nowStack.Push(r_pastStack.Pop());
-            pathTextBox.Text = r_nowStack.Peek().Item1;
-            m_currentPath = r_nowStack.Peek().Item1;
-            fillDataGridView(r_nowStack.Peek().Item2);
+            redoUndoHelper();
         }
 
         private void redoToolStripButton_Click(object sender, EventArgs e)
@@ -77,6 +76,11 @@ namespace filemanager
             if (r_nowStack.Count <= 1) return;
 
             r_pastStack.Push(r_nowStack.Pop());
+            redoUndoHelper();
+        }
+
+        private void redoUndoHelper()
+        {
             pathTextBox.Text = r_nowStack.Peek().Item1;
             m_currentPath = r_nowStack.Peek().Item1;
             fillDataGridView(r_nowStack.Peek().Item2);
@@ -95,11 +99,48 @@ namespace filemanager
             }
         }
 
-        private bool isCurrentPathAFolder()
+        private eFileType isCurrentPathAFolder(string i_CurrentPath)
         {
-            FileAttributes attributes = File.GetAttributes(m_currentPath);
+            eFileType fileType;
 
-            return attributes.HasFlag(FileAttributes.Directory);
+            try
+            {
+                FileAttributes attributes = File.GetAttributes(i_CurrentPath);
+
+                fileType = attributes.HasFlag(FileAttributes.Directory) ? eFileType.Folder : eFileType.File;
+            }
+            catch (Exception e)
+            {
+                MessageBox.Show(e.Message);
+                fileType = eFileType.Invalid;
+            }
+
+            return fileType;
+        }
+
+        private void pathTextBox_KeyUp(object sender, KeyEventArgs e)
+        {
+            if (e.KeyCode != Keys.Enter) return;
+
+            string enteredPath = pathTextBox.Text;
+            eFileType fileType = isCurrentPathAFolder(enteredPath);
+
+            if (fileType == eFileType.Folder) 
+            {
+                m_currentPath = enteredPath;
+                fillDataGridView(Directory.GetFileSystemEntries(enteredPath, "*", SearchOption.TopDirectoryOnly));
+            }
+            else // todo fill this up
+            {
+                try
+                {
+                     System.Diagnostics.Process.Start(enteredPath);
+                }
+                catch (Exception exception)
+                {
+                    MessageBox.Show(exception.Message);
+                }
+            }
         }
     }
 }

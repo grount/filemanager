@@ -83,8 +83,9 @@
             this.pathTextBox.Name = "pathTextBox";
             this.pathTextBox.Size = new System.Drawing.Size(701, 20);
             this.pathTextBox.TabIndex = 2;
-            this.pathTextBox.Text = "My PC";
             this.pathTextBox.TabStop = false;
+            this.pathTextBox.Text = "My PC";
+            this.pathTextBox.KeyUp += new System.Windows.Forms.KeyEventHandler(this.pathTextBox_KeyUp);
             // 
             // dataGridView1
             // 
