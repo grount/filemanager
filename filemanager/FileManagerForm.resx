@@ -117,9 +117,26 @@
   <resheader name="writer">
     <value>System.Resources.ResXResourceWriter, System.Windows.Forms, Version=4.0.0.0, Culture=neutral, PublicKeyToken=b77a5c561934e089</value>
   </resheader>
-  <metadata name="toolStrip1.TrayLocation" type="System.Drawing.Point, System.Drawing, Version=4.0.0.0, Culture=neutral, PublicKeyToken=b03f5f7f11d50a3a">
+  <metadata name="toolStrip.TrayLocation" type="System.Drawing.Point, System.Drawing, Version=4.0.0.0, Culture=neutral, PublicKeyToken=b03f5f7f11d50a3a">
     <value>17, 17</value>
   </metadata>
+  <assembly alias="System.Drawing" name="System.Drawing, Version=4.0.0.0, Culture=neutral, PublicKeyToken=b03f5f7f11d50a3a" />
+  <data name="undoToolStripButton.Image" type="System.Drawing.Bitmap, System.Drawing" mimetype="application/x-microsoft.net.object.bytearray.base64">
+    <value>
+        iVBORw0KGgoAAAANSUhEUgAAABgAAAAYCAYAAADgdz34AAAAAXNSR0IArs4c6QAAAARnQU1BAACxjwv8
+        YQUAAAAJcEhZcwAADsMAAA7DAcdvqGQAAAJdSURBVEhLpVXdahNREM4D6COI6Bv4gy8ggnF344WI4oUX
+        Ct4oeFMRb1QQfABFKohU0Ysme9I0291t0kZTbW3VVNBYmtTWRFQU/1q9VC/GmZOzcfc4za7tBx/ZzMz5
+        zpnZObOppMgMD280XLGVSM/KvD4YpewuyxPXjRG7bfkCwkx7ooW//RnP3qnCk8MqZ7fgYj8s2IuGL0b2
+        uWKzWt4blpvfazniByfUi2l/cMXy8nuUDI+O+OBvTiAJTUf8WnUTWZY1nFwnZcKWC52Jan5orAgnH47B
+        gXKB9RNNzy4q2Q5ktzCBYZ6dmQCnvQhPPn2AOwtzUPv8EYZaC3BqcpyNN9zcDiWPp8dW5IICXn42DfnX
+        TTiMpw/bj95zofy2BWdmqhG7pCeuKXnMgOnzgJdmH8FdPDHnC1jEzPqm70dspmMvSXG6lWFHmEcqDhRa
+        r1ifzhJmotsOVnMbUnT1dUdASj271GB9OmmDExOlqB07k92AykKk1OnF0jO9ZD0uzFvNl3ChNhm10wZ6
+        iY5VfZj79gVuNl7A+Ls25DCDgWYd5le+RhdrPD1VgXOPH0RsskQENbi6jou1KRho1Lv/K+/fwHHcOBwT
+        R7xsi1KcgIZ+PeDG/HNZmtuY+vmnWuoJaPr2VSWPnYQjlwui+l+pz/5jT8KMb29T8h3QyOUC10TPHlKy
+        f0EDCqfhd3bB/3F5f6mwSclGQaNWjlx+YSzTvviJtd+t5HjQJvLjwQjEcDlWPIAsF45cRoQn1nzVsvQC
+        jVyaijS4dFHqc2pFczS/XYWvD3Qr5VcP2b2hsUil/gCRi3euBHOhTAAAAABJRU5ErkJggg==
+</value>
+  </data>
   <metadata name="Path.UserAddedColumn" type="System.Boolean, mscorlib, Version=4.0.0.0, Culture=neutral, PublicKeyToken=b77a5c561934e089">
     <value>True</value>
   </metadata>
