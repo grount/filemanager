@@ -31,10 +31,10 @@
             System.ComponentModel.ComponentResourceManager resources = new System.ComponentModel.ComponentResourceManager(typeof(FileManagerForm));
             this.toolStrip = new System.Windows.Forms.ToolStrip();
             this.undoToolStripButton = new System.Windows.Forms.ToolStripButton();
-            this.textBox1 = new System.Windows.Forms.TextBox();
+            this.redoToolStripButton = new System.Windows.Forms.ToolStripButton();
+            this.pathTextBox = new System.Windows.Forms.TextBox();
             this.dataGridView1 = new System.Windows.Forms.DataGridView();
             this.Path = new System.Windows.Forms.DataGridViewTextBoxColumn();
-            this.redoToolStripButton = new System.Windows.Forms.ToolStripButton();
             this.toolStrip.SuspendLayout();
             ((System.ComponentModel.ISupportInitialize)(this.dataGridView1)).BeginInit();
             this.SuspendLayout();
@@ -63,13 +63,28 @@
             this.undoToolStripButton.TextImageRelation = System.Windows.Forms.TextImageRelation.ImageAboveText;
             this.undoToolStripButton.Click += new System.EventHandler(this.undoToolStripButton_Click);
             // 
-            // textBox1
+            // redoToolStripButton
             // 
-            this.textBox1.Dock = System.Windows.Forms.DockStyle.Top;
-            this.textBox1.Location = new System.Drawing.Point(0, 45);
-            this.textBox1.Name = "textBox1";
-            this.textBox1.Size = new System.Drawing.Size(701, 20);
-            this.textBox1.TabIndex = 2;
+            this.redoToolStripButton.AutoSize = false;
+            this.redoToolStripButton.Image = ((System.Drawing.Image)(resources.GetObject("redoToolStripButton.Image")));
+            this.redoToolStripButton.ImageAlign = System.Drawing.ContentAlignment.TopCenter;
+            this.redoToolStripButton.ImageScaling = System.Windows.Forms.ToolStripItemImageScaling.None;
+            this.redoToolStripButton.ImageTransparentColor = System.Drawing.Color.Magenta;
+            this.redoToolStripButton.Name = "redoToolStripButton";
+            this.redoToolStripButton.Size = new System.Drawing.Size(42, 42);
+            this.redoToolStripButton.Text = "Redo";
+            this.redoToolStripButton.TextImageRelation = System.Windows.Forms.TextImageRelation.ImageAboveText;
+            this.redoToolStripButton.Click += new System.EventHandler(this.redoToolStripButton_Click);
+            // 
+            // pathTextBox
+            // 
+            this.pathTextBox.Dock = System.Windows.Forms.DockStyle.Top;
+            this.pathTextBox.Location = new System.Drawing.Point(0, 45);
+            this.pathTextBox.Name = "pathTextBox";
+            this.pathTextBox.Size = new System.Drawing.Size(701, 20);
+            this.pathTextBox.TabIndex = 2;
+            this.pathTextBox.Text = "My PC";
+            this.pathTextBox.TabStop = false;
             // 
             // dataGridView1
             // 
@@ -89,23 +104,10 @@
             // 
             // Path
             // 
+            this.Path.AutoSizeMode = System.Windows.Forms.DataGridViewAutoSizeColumnMode.Fill;
             this.Path.HeaderText = "Path";
             this.Path.Name = "Path";
             this.Path.ReadOnly = true;
-            this.Path.Width = 300;
-            // 
-            // redoToolStripButton
-            // 
-            this.redoToolStripButton.AutoSize = false;
-            this.redoToolStripButton.Image = ((System.Drawing.Image)(resources.GetObject("redoToolStripButton.Image")));
-            this.redoToolStripButton.ImageAlign = System.Drawing.ContentAlignment.TopCenter;
-            this.redoToolStripButton.ImageScaling = System.Windows.Forms.ToolStripItemImageScaling.None;
-            this.redoToolStripButton.ImageTransparentColor = System.Drawing.Color.Magenta;
-            this.redoToolStripButton.Name = "redoToolStripButton";
-            this.redoToolStripButton.Size = new System.Drawing.Size(42, 42);
-            this.redoToolStripButton.Text = "Redo";
-            this.redoToolStripButton.TextImageRelation = System.Windows.Forms.TextImageRelation.ImageAboveText;
-            this.redoToolStripButton.Click += new System.EventHandler(this.redoToolStripButton_Click);
             // 
             // FileManagerForm
             // 
@@ -113,7 +115,7 @@
             this.AutoScaleMode = System.Windows.Forms.AutoScaleMode.Font;
             this.ClientSize = new System.Drawing.Size(701, 359);
             this.Controls.Add(this.dataGridView1);
-            this.Controls.Add(this.textBox1);
+            this.Controls.Add(this.pathTextBox);
             this.Controls.Add(this.toolStrip);
             this.Name = "FileManagerForm";
             this.Text = "File Manager";
@@ -128,11 +130,11 @@
         #endregion
 
         private System.Windows.Forms.ToolStrip toolStrip;
-        private System.Windows.Forms.TextBox textBox1;
+        private System.Windows.Forms.TextBox pathTextBox;
         private System.Windows.Forms.DataGridView dataGridView1;
-        private System.Windows.Forms.DataGridViewTextBoxColumn Path;
         private System.Windows.Forms.ToolStripButton undoToolStripButton;
         private System.Windows.Forms.ToolStripButton redoToolStripButton;
+        private System.Windows.Forms.DataGridViewTextBoxColumn Path;
     }
 }
 

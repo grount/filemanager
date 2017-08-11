@@ -22,7 +22,8 @@ namespace filemanager
         private void InitializeListBoxItems()
         {
             string[] stringDrives = Environment.GetLogicalDrives();
-            r_nowStack.Push(new Tuple<string, string[]>(string.Empty, stringDrives));
+
+            r_nowStack.Push(new Tuple<string, string[]>("My PC", stringDrives));
 
             foreach (var stringDrive in stringDrives)
             {
@@ -49,6 +50,7 @@ namespace filemanager
             if (dataGridView1.Rows.Count <= 0) return;
 
             m_currentPath = dataGridView1.CurrentCell.Value.ToString();
+            pathTextBox.Text = m_currentPath;
 
             if (r_nowStack.Count > 0)
             {
@@ -60,31 +62,24 @@ namespace filemanager
                 Directory.GetFileSystemEntries(m_currentPath, "*", SearchOption.TopDirectoryOnly)));
         }
 
-        private string[] getDataGridViewRowStrings()
-        {
-            int i = 0;
-            string[] dataGridViewStrings = new string[dataGridView1.RowCount];
-
-            foreach (DataGridViewRow row in dataGridView1.Rows)
-            {
-                dataGridViewStrings[i] = row.Cells[0].Value.ToString(); // TODO yield?
-                i++;
-            }
-
-            return dataGridViewStrings;
-        }
-
         private void undoToolStripButton_Click(object sender, EventArgs e)
         {
             if (r_pastStack.Count <= 0) return;
 
             r_nowStack.Push(r_pastStack.Pop());
+            pathTextBox.Text = r_nowStack.Peek().Item1;
             m_currentPath = r_nowStack.Peek().Item1;
             fillDataGridView(r_nowStack.Peek().Item2);
         }
 
         private void redoToolStripButton_Click(object sender, EventArgs e)
         {
+            if (r_nowStack.Count <= 1) return;
+
+            r_pastStack.Push(r_nowStack.Pop());
+            pathTextBox.Text = r_nowStack.Peek().Item1;
+            m_currentPath = r_nowStack.Peek().Item1;
+            fillDataGridView(r_nowStack.Peek().Item2);
         }
 
         private void fillDataGridView(IEnumerable<string> files)
