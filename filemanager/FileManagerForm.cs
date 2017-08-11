@@ -1,13 +1,16 @@
 ﻿using System;
 using System.Collections.Generic;
 using System.IO;
+using System.Linq;
 using System.Windows.Forms;
 
 namespace filemanager
 {
     public partial class FileManagerForm : Form
     {
-        readonly Stack<Tuple<string, string[]>> r_undoStack = new Stack<Tuple<string, string[]>>();
+        readonly Stack<Tuple<string, string[]>> r_nowStack = new Stack<Tuple<string, string[]>>();
+        readonly Stack<Tuple<string, string[]>> r_pastStack = new Stack<Tuple<string, string[]>>();
+
         string m_currentPath = string.Empty;
 
         public FileManagerForm()
@@ -19,6 +22,7 @@ namespace filemanager
         private void InitializeListBoxItems()
         {
             string[] stringDrives = Environment.GetLogicalDrives();
+            r_nowStack.Push(new Tuple<string, string[]>(string.Empty, stringDrives));
 
             foreach (var stringDrive in stringDrives)
             {
@@ -28,10 +32,7 @@ namespace filemanager
 
         private void dataGridView1_CellDoubleClick(object sender, DataGridViewCellEventArgs e)
         {
-            if (dataGridView1.Rows.Count <= 0) return;
-
-            m_currentPath = dataGridView1.CurrentCell.Value.ToString();
-            r_undoStack.Push(new Tuple<string, string[]>(m_currentPath, getDataGridViewRowStrings()));
+            setStacks();
 
             if (isCurrentPathAFolder())
             {
@@ -41,7 +42,22 @@ namespace filemanager
             {
                 System.Diagnostics.Process.Start(m_currentPath);
             }
+        }
 
+        private void setStacks()
+        {
+            if (dataGridView1.Rows.Count <= 0) return;
+
+            m_currentPath = dataGridView1.CurrentCell.Value.ToString();
+
+            if (r_nowStack.Count > 0)
+            {
+                r_pastStack.Push(r_nowStack.Pop());
+                r_nowStack.Clear();
+            }
+
+            r_nowStack.Push(new Tuple<string, string[]>(m_currentPath,
+                Directory.GetFileSystemEntries(m_currentPath, "*", SearchOption.TopDirectoryOnly)));
         }
 
         private string[] getDataGridViewRowStrings()
@@ -51,7 +67,7 @@ namespace filemanager
 
             foreach (DataGridViewRow row in dataGridView1.Rows)
             {
-                dataGridViewStrings[i] = row.Cells[0].Value.ToString();
+                dataGridViewStrings[i] = row.Cells[0].Value.ToString(); // TODO yield?
                 i++;
             }
 
@@ -60,12 +76,15 @@ namespace filemanager
 
         private void undoToolStripButton_Click(object sender, EventArgs e)
         {
-            if (r_undoStack.Count != 0)
-            {
-                m_currentPath = r_undoStack.Peek().Item1;
-                fillDataGridView(r_undoStack.Peek().Item2);
-                r_undoStack.Pop();
-            }
+            if (r_pastStack.Count <= 0) return;
+
+            r_nowStack.Push(r_pastStack.Pop());
+            m_currentPath = r_nowStack.Peek().Item1;
+            fillDataGridView(r_nowStack.Peek().Item2);
+        }
+
+        private void redoToolStripButton_Click(object sender, EventArgs e)
+        {
         }
 
         private void fillDataGridView(IEnumerable<string> files)
