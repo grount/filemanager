@@ -2,7 +2,6 @@
 using System.Collections.Generic;
 using System.IO;
 using System.Windows.Forms;
-using System.Windows.Forms.VisualStyles;
 
 namespace filemanager
 {
@@ -111,7 +110,6 @@ namespace filemanager
             }
             catch (Exception e)
             {
-                MessageBox.Show(e.Message);
                 fileType = eFileType.Invalid;
             }
 
@@ -125,21 +123,20 @@ namespace filemanager
             string enteredPath = pathTextBox.Text;
             eFileType fileType = isCurrentPathAFolder(enteredPath);
 
-            if (fileType == eFileType.Folder) 
+            if (fileType == eFileType.Folder)
             {
                 m_currentPath = enteredPath;
                 fillDataGridView(Directory.GetFileSystemEntries(enteredPath, "*", SearchOption.TopDirectoryOnly));
             }
-            else // todo fill this up
+            else if (fileType == eFileType.File)
             {
-                try
-                {
-                     System.Diagnostics.Process.Start(enteredPath);
-                }
-                catch (Exception exception)
-                {
-                    MessageBox.Show(exception.Message);
-                }
+                System.Diagnostics.Process.Start(enteredPath);
+            }
+            else // TODO web site should work also from url bar.
+            {
+                MessageBox.Show("Windows can't find '" + enteredPath + "'. Check the spelling and try again.",
+                    "File Explorer",
+                    MessageBoxButtons.OK, MessageBoxIcon.Error);
             }
         }
     }
