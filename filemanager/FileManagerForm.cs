@@ -7,7 +7,7 @@ namespace filemanager
 {
     public partial class FileManagerForm : Form
     {
-        readonly Stack<Tuple<string, string[]>> r_pathStack = new Stack<Tuple<string, string[]>>();
+        readonly Stack<Tuple<string, string[]>> r_undoStack = new Stack<Tuple<string, string[]>>();
         string m_currentPath = string.Empty;
 
         public FileManagerForm()
@@ -31,21 +31,15 @@ namespace filemanager
             if (dataGridView1.Rows.Count <= 0) return;
 
             m_currentPath = dataGridView1.CurrentCell.Value.ToString();
-            r_pathStack.Push(new Tuple<string, string[]>(m_currentPath, getDataGridViewRowStrings()));
+            r_undoStack.Push(new Tuple<string, string[]>(m_currentPath, getDataGridViewRowStrings()));
 
-            if (isCurrentPathFolder())
+            if (isCurrentPathAFolder())
             {
-                string[] files = Directory.GetFileSystemEntries(m_currentPath, "*", SearchOption.TopDirectoryOnly);
-                dataGridView1.Rows.Clear();
-
-                foreach (var file in files)
-                {
-                    dataGridView1.Rows.Add(file);
-                }
+                fillDataGridView(Directory.GetFileSystemEntries(m_currentPath, "*", SearchOption.TopDirectoryOnly));
             }
             else
             {
-                File.Open(m_currentPath, FileMode.Open);
+                System.Diagnostics.Process.Start(m_currentPath);
             }
 
         }
@@ -66,25 +60,18 @@ namespace filemanager
 
         private void undoToolStripButton_Click(object sender, EventArgs e)
         {
-            if (r_pathStack != null)
+            if (r_undoStack.Count != 0)
             {
-                m_currentPath = r_pathStack.Peek().Item1;
-                dataGridView1.Rows.Clear();
-
-                if (m_currentPath != null)
-                {
-                    string[] files = r_pathStack.Peek().Item2;
-
-                    foreach (var file in files)
-                    {
-                        dataGridView1.Rows.Add(file);
-                    }
-                }
+                m_currentPath = r_undoStack.Peek().Item1;
+                fillDataGridView(r_undoStack.Peek().Item2);
+                r_undoStack.Pop();
             }
         }
 
-        private void fillDataGridView(string[] files)
+        private void fillDataGridView(IEnumerable<string> files)
         {
+            dataGridView1.Rows.Clear();
+
             if (m_currentPath != null)
             {
                 foreach (var file in files)
@@ -94,7 +81,7 @@ namespace filemanager
             }
         }
 
-        private bool isCurrentPathFolder()
+        private bool isCurrentPathAFolder()
         {
             FileAttributes attributes = File.GetAttributes(m_currentPath);
 
