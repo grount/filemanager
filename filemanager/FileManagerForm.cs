@@ -33,9 +33,9 @@ namespace filemanager
         private void dataGridView1_CellDoubleClick(object sender, DataGridViewCellEventArgs e)
         {
             setStacks();
-            eFileType fileType = isCurrentPathAFolder(m_currentPath);
+            eFileType fileType = FileManagerUtils.GetCurrentPathType(m_currentPath);
 
-            if (fileType == eFileType.Folder)
+            if (fileType == eFileType.Folder || fileType == eFileType.LogicalDrive)
             {
                 fillDataGridView(Directory.GetFileSystemEntries(m_currentPath, "*", SearchOption.TopDirectoryOnly));
             }
@@ -98,30 +98,12 @@ namespace filemanager
             }
         }
 
-        private eFileType isCurrentPathAFolder(string i_CurrentPath)
-        {
-            eFileType fileType;
-
-            try
-            {
-                FileAttributes attributes = File.GetAttributes(i_CurrentPath);
-
-                fileType = attributes.HasFlag(FileAttributes.Directory) ? eFileType.Folder : eFileType.File;
-            }
-            catch (Exception e)
-            {
-                fileType = eFileType.Invalid;
-            }
-
-            return fileType;
-        }
-
         private void pathTextBox_KeyUp(object sender, KeyEventArgs e)
         {
             if (e.KeyCode != Keys.Enter) return;
 
             string enteredPath = pathTextBox.Text;
-            eFileType fileType = isCurrentPathAFolder(enteredPath);
+            eFileType fileType = FileManagerUtils.GetCurrentPathType(enteredPath);
 
             if (fileType == eFileType.Folder)
             {
@@ -137,6 +119,42 @@ namespace filemanager
                 MessageBox.Show("Windows can't find '" + enteredPath + "'. Check the spelling and try again.",
                     "File Explorer",
                     MessageBoxButtons.OK, MessageBoxIcon.Error);
+            }
+        }
+
+        private string getDataGridViewCellValue()
+        {
+            int selectedRowIndex = dataGridView1.SelectedCells[0].RowIndex;
+            DataGridViewRow selectedRow = dataGridView1.Rows[selectedRowIndex];
+
+            return Convert.ToString(selectedRow.Cells["Path"].Value);
+        }
+
+        private void moveToolStripButton_Click(object sender, EventArgs e)
+        {
+            if (dataGridView1.SelectedCells.Count <= 0)
+            {
+                MessageBox.Show("You need to select an item in order to move it.", "Windows Explorer",
+                    MessageBoxButtons.OK, MessageBoxIcon.Asterisk);
+            }
+            else
+            {
+                string path = getDataGridViewCellValue();
+
+                moveFolderBrowserDialog.SelectedPath = System.IO.Path.GetDirectoryName(path);
+
+                if (moveFolderBrowserDialog.ShowDialog() != DialogResult.OK)
+                {
+                    MessageBox.Show("You need to select destination folder in order to move it.", "Windows Explorer",
+                        MessageBoxButtons.OK, MessageBoxIcon.Asterisk);
+                }
+                else
+                {
+                    string destinationFolder =
+                        moveFolderBrowserDialog.SelectedPath; // todo missing file extensions if its a file
+
+                    MoveUtils.Move(path, destinationFolder);
+                }
             }
         }
     }

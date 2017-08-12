@@ -4,6 +4,7 @@
     {
         File,
         Folder,
+        LogicalDrive,
         Invalid
     };
 }
