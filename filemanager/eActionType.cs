@@ -3,6 +3,7 @@
     public enum eActionType
     {
         Move,
-        Copy
+        Copy,
+        Delete
     }
 }

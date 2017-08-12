@@ -9,9 +9,9 @@ namespace filemanager
         public static void Perform(eActionType i_ActionType, string i_OriginPath, string io_DestinationPath)
         {
             if (io_DestinationPath == Path.GetDirectoryName(i_OriginPath) && i_ActionType == eActionType.Move)
-                return; // todo handle copying files with the same path?
+                return; 
 
-            ProcessDestinationPath(i_OriginPath, ref io_DestinationPath, i_ActionType);
+            ProcessDestinationPath(i_OriginPath, ref io_DestinationPath);
 
             switch (FileManagerUtils.GetCurrentPathType(i_OriginPath))
             {
@@ -75,8 +75,7 @@ namespace filemanager
             }
         }
 
-        private static void ProcessDestinationPath(string i_OriginPath, ref string io_DestinationPath,
-            eActionType i_ActionType)
+        private static void ProcessDestinationPath(string i_OriginPath, ref string io_DestinationPath)
         {
             if (FileManagerUtils.GetCurrentPathType(io_DestinationPath) != eFileType.LogicalDrive)
             {
@@ -93,9 +92,7 @@ namespace filemanager
                 {
                     io_DestinationPath = Path.GetDirectoryName(io_DestinationPath) + Path.GetFileNameWithoutExtension(io_DestinationPath) + " - Copy" +
                                         Path.GetExtension(i_OriginPath);
-
                 }
-
             }
         }
     }

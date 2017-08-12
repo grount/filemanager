@@ -130,69 +130,65 @@ namespace filemanager
             return Convert.ToString(selectedRow.Cells["Path"].Value);
         }
 
-        private void moveToolStripButton_Click(object sender, EventArgs e)
+        private void operationEventHandler(eActionType i_ActionType)
         {
-            //if (dataGridView1.SelectedCells.Count <= 0)
-            //{
-            //    MessageBox.Show("You need to select an item in order to move it.", "Windows Explorer",
-            //        MessageBoxButtons.OK, MessageBoxIcon.Asterisk);
-            //}
-            //else
-            //{
-            //    string path = getDataGridViewCellValue();
+            string message = string.Empty;
 
-            //    folderBrowserDialog.SelectedPath = System.IO.Path.GetDirectoryName(path);
+            FileManagerUtils.messagePreperations(ref message, i_ActionType);
 
-            //    if (folderBrowserDialog.ShowDialog() != DialogResult.OK)
-            //    {
-            //        MessageBox.Show("You need to select destination folder in order to move it.", "Windows Explorer",
-            //            MessageBoxButtons.OK, MessageBoxIcon.Asterisk);
-            //    }
-            //    else
-            //    {
-            //        string destinationFolder = folderBrowserDialog.SelectedPath;
+            if (!checkDataGridViewBounds(message)) return;
 
-            //        ActionUtils.Perform(eActionType.Move, path, destinationFolder);
-            //        removePathFromDataGridView(path);
-            //    }
-            //}
+            string path = getDataGridViewCellValue();
 
-            operationEventHandler(eActionType.Move);
+            if (i_ActionType != eActionType.Delete && showFolderBrowseDialog(path, message))
+            {
+                operationEventHandlerHelper(i_ActionType, path);
+            }
+            else if (i_ActionType == eActionType.Delete)
+            {
+                operationEventHandlerHelper(i_ActionType, path);
+            }
         }
 
-        private void operationEventHandler(eActionType i_ActionType)
+        private void operationEventHandlerHelper(eActionType i_ActionType, string i_Path)
+        {
+            string destinationFolder = folderBrowserDialog.SelectedPath;
+
+            ActionUtils.Perform(i_ActionType, i_Path, destinationFolder);
+
+            if (i_ActionType == eActionType.Move)
+            {
+                removePathFromDataGridView(i_Path);
+            }
+        }
+
+        private bool checkDataGridViewBounds(string i_Message)
         {
             if (dataGridView.SelectedCells.Count <= 0)
             {
-                // todo move or copy sentence..
-
-                MessageBox.Show("You need to select an item in order to move it.", "Windows Explorer",
+                MessageBox.Show("You need to select an item in order to " + i_Message + " it.", "Windows Explorer",
                     MessageBoxButtons.OK, MessageBoxIcon.Asterisk);
+
+                return false;
             }
-            else
+
+            return true;
+        }
+
+        private bool showFolderBrowseDialog(string i_Path, string i_Message)
+        {
+            folderBrowserDialog.SelectedPath = System.IO.Path.GetDirectoryName(i_Path);
+
+            if (folderBrowserDialog.ShowDialog() != DialogResult.OK)
             {
-                string path = getDataGridViewCellValue();
+                MessageBox.Show("You need to select destination folder in order to " + i_Message + " it.",
+                    "Windows Explorer",
+                    MessageBoxButtons.OK, MessageBoxIcon.Asterisk);
 
-                folderBrowserDialog.SelectedPath = System.IO.Path.GetDirectoryName(path);
-
-                if (folderBrowserDialog.ShowDialog() != DialogResult.OK)
-                {
-                    MessageBox.Show("You need to select destination folder in order to move it.",
-                        "Windows Explorer", // todo same here
-                        MessageBoxButtons.OK, MessageBoxIcon.Asterisk);
-                }
-                else
-                {
-                    string destinationFolder = folderBrowserDialog.SelectedPath;
-
-                    ActionUtils.Perform(i_ActionType, path, destinationFolder);
-
-                    if (i_ActionType == eActionType.Move)
-                    {
-                        removePathFromDataGridView(path);                       
-                    }
-                }
+                return true;
             }
+
+            return false;
         }
 
         private void removePathFromDataGridView(string i_Path)
@@ -209,6 +205,16 @@ namespace filemanager
         private void copyToolStripButton_Click(object sender, EventArgs e)
         {
             operationEventHandler(eActionType.Copy);
+        }
+
+        private void deleteToolStripButton_Click(object sender, EventArgs e)
+        {
+            operationEventHandler(eActionType.Delete);
+        }
+
+        private void moveToolStripButton_Click(object sender, EventArgs e)
+        {
+            operationEventHandler(eActionType.Move);
         }
     }
 }

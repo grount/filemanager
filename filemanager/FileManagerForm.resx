@@ -188,6 +188,24 @@
         A4AqAAAAAElFTkSuQmCC
 </value>
   </data>
+  <data name="deleteToolStripButton.Image" type="System.Drawing.Bitmap, System.Drawing" mimetype="application/x-microsoft.net.object.bytearray.base64">
+    <value>
+        iVBORw0KGgoAAAANSUhEUgAAABgAAAAYCAYAAADgdz34AAAAAXNSR0IArs4c6QAAAARnQU1BAACxjwv8
+        YQUAAAAJcEhZcwAADsMAAA7DAcdvqGQAAAIbSURBVEhLxZTPSxtBFMf3pHhQ9FoQ+6eJINSjUhStCiqe
+        6o+r9daDBqPZGaHkYJwJYhA3u1FaRCEXLf0DtEW8xvdm38TJ7MwmJ/vgS5bMvM93982bF/zX+HX+YyQW
+        4VQiw+NI8oekwl9Q6hn+i0/5p+sqG6btvcfFxcFALNhKJEvPieStXFVK/+B3uVku91N6fjTE0Vhdhj8z
+        oG4S4VX9jI0Sxh3wuR+hBH90UhR+z4IsmXsiGf72mmBZzDcXW2ut2+nJlthcbQNsia8rao/cXm//F0nW
+        cJYLa95OBPgdJGq5TBCu122TRLIFwqaB3aIPtLr3TSWYBijTxIRrYU51f1fvebosl4cIj2+PrZgmw5e0
+        CgszGQAKTVxwVOHLjMrVnLrgE4QPAuxpvdDNxCUbriTCQ8IHQXpxjEVQryZOeJrfJDx8Ad5QawNtyjXx
+        wVOV/hLeb4Dy1Rx1uuFv4Q4DV4lQeXAt3z3pLJF1yKhe4FpuE1YkPLQpTEVz0Qffh/MozPtb2GQkVTZO
+        eDWDhmkqei+aPlDfwZsXLarwx1qNDxI+DVhYxkUFWPzcYWJ3i22CewtLs+09sWRzhH0LHFA4cm2TnD5X
+        JjYcFN0Ui32E7QwctThyNaC0s+mEa9l74gq/b5zwD4RzR2rCGjasB0Vd4TpUuWDkQtKTBckIDxRr7i1L
+        XuDIxamIgwvK0MTbiUqfWRFbMdMt7xtB8ArzQcVymhxIqQAAAABJRU5ErkJggg==
+</value>
+  </data>
+  <metadata name="Path.UserAddedColumn" type="System.Boolean, mscorlib, Version=4.0.0.0, Culture=neutral, PublicKeyToken=b77a5c561934e089">
+    <value>True</value>
+  </metadata>
   <metadata name="Path.UserAddedColumn" type="System.Boolean, mscorlib, Version=4.0.0.0, Culture=neutral, PublicKeyToken=b77a5c561934e089">
     <value>True</value>
   </metadata>

@@ -42,5 +42,21 @@ namespace filemanager
 
             return state;
         }
+
+        public static void messagePreperations(ref string i_Message, eActionType i_ActionType)
+        {
+            switch (i_ActionType)
+            {
+                case eActionType.Copy:
+                    i_Message = "copy";
+                    break;
+                case eActionType.Move:
+                    i_Message = "move";
+                    break;
+                case eActionType.Delete:
+                    i_Message = "delete";
+                    break;
+            }
+        }
     }
 }
