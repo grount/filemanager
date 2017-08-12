@@ -26,7 +26,7 @@ namespace filemanager
 
             foreach (var stringDrive in stringDrives)
             {
-                dataGridView1.Rows.Add(stringDrive);
+                dataGridView.Rows.Add(stringDrive);
             }
         }
 
@@ -47,9 +47,9 @@ namespace filemanager
 
         private void setStacks()
         {
-            if (dataGridView1.Rows.Count <= 0) return;
+            if (dataGridView.Rows.Count <= 0) return;
 
-            m_currentPath = dataGridView1.CurrentCell.Value.ToString();
+            m_currentPath = dataGridView.CurrentCell.Value.ToString();
             pathTextBox.Text = m_currentPath;
 
             if (r_nowStack.Count > 0)
@@ -87,13 +87,13 @@ namespace filemanager
 
         private void fillDataGridView(IEnumerable<string> files)
         {
-            dataGridView1.Rows.Clear();
+            dataGridView.Rows.Clear();
 
             if (m_currentPath != null)
             {
                 foreach (var file in files)
                 {
-                    dataGridView1.Rows.Add(file);
+                    dataGridView.Rows.Add(file);
                 }
             }
         }
@@ -124,16 +124,48 @@ namespace filemanager
 
         private string getDataGridViewCellValue()
         {
-            int selectedRowIndex = dataGridView1.SelectedCells[0].RowIndex;
-            DataGridViewRow selectedRow = dataGridView1.Rows[selectedRowIndex];
+            int selectedRowIndex = dataGridView.SelectedCells[0].RowIndex;
+            DataGridViewRow selectedRow = dataGridView.Rows[selectedRowIndex];
 
             return Convert.ToString(selectedRow.Cells["Path"].Value);
         }
 
         private void moveToolStripButton_Click(object sender, EventArgs e)
         {
-            if (dataGridView1.SelectedCells.Count <= 0)
+            //if (dataGridView1.SelectedCells.Count <= 0)
+            //{
+            //    MessageBox.Show("You need to select an item in order to move it.", "Windows Explorer",
+            //        MessageBoxButtons.OK, MessageBoxIcon.Asterisk);
+            //}
+            //else
+            //{
+            //    string path = getDataGridViewCellValue();
+
+            //    folderBrowserDialog.SelectedPath = System.IO.Path.GetDirectoryName(path);
+
+            //    if (folderBrowserDialog.ShowDialog() != DialogResult.OK)
+            //    {
+            //        MessageBox.Show("You need to select destination folder in order to move it.", "Windows Explorer",
+            //            MessageBoxButtons.OK, MessageBoxIcon.Asterisk);
+            //    }
+            //    else
+            //    {
+            //        string destinationFolder = folderBrowserDialog.SelectedPath;
+
+            //        ActionUtils.Perform(eActionType.Move, path, destinationFolder);
+            //        removePathFromDataGridView(path);
+            //    }
+            //}
+
+            operationEventHandler(eActionType.Move);
+        }
+
+        private void operationEventHandler(eActionType i_ActionType)
+        {
+            if (dataGridView.SelectedCells.Count <= 0)
             {
+                // todo move or copy sentence..
+
                 MessageBox.Show("You need to select an item in order to move it.", "Windows Explorer",
                     MessageBoxButtons.OK, MessageBoxIcon.Asterisk);
             }
@@ -141,21 +173,42 @@ namespace filemanager
             {
                 string path = getDataGridViewCellValue();
 
-                moveFolderBrowserDialog.SelectedPath = System.IO.Path.GetDirectoryName(path);
+                folderBrowserDialog.SelectedPath = System.IO.Path.GetDirectoryName(path);
 
-                if (moveFolderBrowserDialog.ShowDialog() != DialogResult.OK)
+                if (folderBrowserDialog.ShowDialog() != DialogResult.OK)
                 {
-                    MessageBox.Show("You need to select destination folder in order to move it.", "Windows Explorer",
+                    MessageBox.Show("You need to select destination folder in order to move it.",
+                        "Windows Explorer", // todo same here
                         MessageBoxButtons.OK, MessageBoxIcon.Asterisk);
                 }
                 else
                 {
-                    string destinationFolder =
-                        moveFolderBrowserDialog.SelectedPath; // todo missing file extensions if its a file
+                    string destinationFolder = folderBrowserDialog.SelectedPath;
 
-                    MoveUtils.Move(path, destinationFolder);
+                    ActionUtils.Perform(i_ActionType, path, destinationFolder);
+
+                    if (i_ActionType == eActionType.Move)
+                    {
+                        removePathFromDataGridView(path);                       
+                    }
                 }
             }
+        }
+
+        private void removePathFromDataGridView(string i_Path)
+        {
+            foreach (DataGridViewRow row in dataGridView.Rows)
+            {
+                if (row.Cells["Path"].Value.Equals(i_Path))
+                {
+                    dataGridView.Rows.Remove(row);
+                }
+            }
+        }
+
+        private void copyToolStripButton_Click(object sender, EventArgs e)
+        {
+            operationEventHandler(eActionType.Copy);
         }
     }
 }

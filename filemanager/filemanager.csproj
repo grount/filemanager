@@ -45,6 +45,7 @@
     <Reference Include="System.Xml" />
   </ItemGroup>
   <ItemGroup>
+    <Compile Include="eActionType.cs" />
     <Compile Include="eFileType.cs" />
     <Compile Include="FileManagerForm.cs">
       <SubType>Form</SubType>
@@ -53,7 +54,7 @@
       <DependentUpon>FileManagerForm.cs</DependentUpon>
     </Compile>
     <Compile Include="FileManagerUtils.cs" />
-    <Compile Include="MoveUtils.cs" />
+    <Compile Include="ActionUtils.cs" />
     <Compile Include="Program.cs" />
     <Compile Include="Properties\AssemblyInfo.cs" />
     <EmbeddedResource Include="FileManagerForm.resx">

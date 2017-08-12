@@ -31,10 +31,13 @@ namespace filemanager
             string[] logicalDrives = Environment.GetLogicalDrives();
             bool state = false;
 
-            if (logicalDrives.All(i_CurrentPath.Contains))
+            foreach (var drive in logicalDrives)
             {
-                i_FileType = eFileType.LogicalDrive;
-                state = true;
+                if (drive.Equals(i_CurrentPath))
+                {
+                    i_FileType = eFileType.LogicalDrive;
+                    state = true;
+                }
             }
 
             return state;
