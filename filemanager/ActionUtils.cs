@@ -38,13 +38,17 @@ namespace filemanager
             {
                 Directory.Move(i_OriginPath, i_DestinationPath); // todo handle moving files with the same name?
             }
-            else
+            else if (i_ActionType == eActionType.Copy)
             {
-                CopyAll(new DirectoryInfo(i_OriginPath), new DirectoryInfo(i_DestinationPath));
+                copyAll(new DirectoryInfo(i_OriginPath), new DirectoryInfo(i_DestinationPath));
+            }
+            else // eActionType.Delete
+            {
+                Directory.Delete(i_OriginPath, true);
             }
         }
 
-        private static void CopyAll(DirectoryInfo source, DirectoryInfo target)
+        private static void copyAll(DirectoryInfo source, DirectoryInfo target)
         {
             Directory.CreateDirectory(target.FullName);
 
@@ -59,7 +63,7 @@ namespace filemanager
             {
                 DirectoryInfo nextTargetSubDir =
                     target.CreateSubdirectory(diSourceSubDir.Name);
-                CopyAll(diSourceSubDir, nextTargetSubDir);
+                copyAll(diSourceSubDir, nextTargetSubDir);
             }
         }
 
@@ -69,9 +73,13 @@ namespace filemanager
             {
                 File.Move(i_OriginPath, i_DestinationPath);
             }
-            else
+            else if (i_ActionType == eActionType.Copy)
             {
                 File.Copy(i_OriginPath, i_DestinationPath);
+            }
+            else
+            {
+                File.Delete(i_OriginPath);
             }
         }
 

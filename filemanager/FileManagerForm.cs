@@ -2,6 +2,7 @@
 using System.Collections.Generic;
 using System.IO;
 using System.Windows.Forms;
+using Renci.SshNet;
 
 namespace filemanager
 {
@@ -146,7 +147,7 @@ namespace filemanager
             }
             else if (i_ActionType == eActionType.Delete)
             {
-                operationEventHandlerHelper(i_ActionType, path);
+                operationEventHandlerHelper(i_ActionType, path); // todo add delete functionality
             }
         }
 
@@ -156,7 +157,7 @@ namespace filemanager
 
             ActionUtils.Perform(i_ActionType, i_Path, destinationFolder);
 
-            if (i_ActionType == eActionType.Move)
+            if (i_ActionType != eActionType.Copy)
             {
                 removePathFromDataGridView(i_Path);
             }
@@ -215,6 +216,10 @@ namespace filemanager
         private void moveToolStripButton_Click(object sender, EventArgs e)
         {
             operationEventHandler(eActionType.Move);
+        }
+
+        private void connectToolStripButton_Click(object sender, EventArgs e)
+        {
         }
     }
 }

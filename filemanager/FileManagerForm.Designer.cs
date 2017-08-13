@@ -34,11 +34,12 @@
             this.redoToolStripButton = new System.Windows.Forms.ToolStripButton();
             this.moveToolStripButton = new System.Windows.Forms.ToolStripButton();
             this.copyToolStripButton = new System.Windows.Forms.ToolStripButton();
+            this.deleteToolStripButton = new System.Windows.Forms.ToolStripButton();
             this.pathTextBox = new System.Windows.Forms.TextBox();
             this.dataGridView = new System.Windows.Forms.DataGridView();
             this.Path = new System.Windows.Forms.DataGridViewTextBoxColumn();
             this.folderBrowserDialog = new System.Windows.Forms.FolderBrowserDialog();
-            this.deleteToolStripButton = new System.Windows.Forms.ToolStripButton();
+            this.connectToolStripButton = new System.Windows.Forms.ToolStripButton();
             this.toolStrip.SuspendLayout();
             ((System.ComponentModel.ISupportInitialize)(this.dataGridView)).BeginInit();
             this.SuspendLayout();
@@ -50,7 +51,8 @@
             this.redoToolStripButton,
             this.moveToolStripButton,
             this.copyToolStripButton,
-            this.deleteToolStripButton});
+            this.deleteToolStripButton,
+            this.connectToolStripButton});
             this.toolStrip.Location = new System.Drawing.Point(0, 0);
             this.toolStrip.Name = "toolStrip";
             this.toolStrip.Size = new System.Drawing.Size(929, 48);
@@ -109,6 +111,19 @@
             this.copyToolStripButton.TextImageRelation = System.Windows.Forms.TextImageRelation.ImageAboveText;
             this.copyToolStripButton.Click += new System.EventHandler(this.copyToolStripButton_Click);
             // 
+            // deleteToolStripButton
+            // 
+            this.deleteToolStripButton.AutoSize = false;
+            this.deleteToolStripButton.Image = ((System.Drawing.Image)(resources.GetObject("deleteToolStripButton.Image")));
+            this.deleteToolStripButton.ImageAlign = System.Drawing.ContentAlignment.TopCenter;
+            this.deleteToolStripButton.ImageScaling = System.Windows.Forms.ToolStripItemImageScaling.None;
+            this.deleteToolStripButton.ImageTransparentColor = System.Drawing.Color.Magenta;
+            this.deleteToolStripButton.Name = "deleteToolStripButton";
+            this.deleteToolStripButton.Size = new System.Drawing.Size(42, 45);
+            this.deleteToolStripButton.Text = "Delete";
+            this.deleteToolStripButton.TextImageRelation = System.Windows.Forms.TextImageRelation.ImageAboveText;
+            this.deleteToolStripButton.Click += new System.EventHandler(this.deleteToolStripButton_Click);
+            // 
             // pathTextBox
             // 
             this.pathTextBox.Dock = System.Windows.Forms.DockStyle.Top;
@@ -146,18 +161,19 @@
             this.Path.ReadOnly = true;
             this.Path.Resizable = System.Windows.Forms.DataGridViewTriState.False;
             // 
-            // deleteToolStripButton
+            // connectToolStripButton
             // 
-            this.deleteToolStripButton.AutoSize = false;
-            this.deleteToolStripButton.Image = ((System.Drawing.Image)(resources.GetObject("deleteToolStripButton.Image")));
-            this.deleteToolStripButton.ImageAlign = System.Drawing.ContentAlignment.TopCenter;
-            this.deleteToolStripButton.ImageScaling = System.Windows.Forms.ToolStripItemImageScaling.None;
-            this.deleteToolStripButton.ImageTransparentColor = System.Drawing.Color.Magenta;
-            this.deleteToolStripButton.Name = "deleteToolStripButton";
-            this.deleteToolStripButton.Size = new System.Drawing.Size(42, 45);
-            this.deleteToolStripButton.Text = "Delete";
-            this.deleteToolStripButton.TextImageRelation = System.Windows.Forms.TextImageRelation.ImageAboveText;
-            this.deleteToolStripButton.Click += new System.EventHandler(this.deleteToolStripButton_Click);
+            this.connectToolStripButton.AutoSize = false;
+            this.connectToolStripButton.CheckOnClick = true;
+            this.connectToolStripButton.Image = ((System.Drawing.Image)(resources.GetObject("connectToolStripButton.Image")));
+            this.connectToolStripButton.ImageAlign = System.Drawing.ContentAlignment.TopCenter;
+            this.connectToolStripButton.ImageScaling = System.Windows.Forms.ToolStripItemImageScaling.None;
+            this.connectToolStripButton.ImageTransparentColor = System.Drawing.Color.Magenta;
+            this.connectToolStripButton.Name = "connectToolStripButton";
+            this.connectToolStripButton.Size = new System.Drawing.Size(52, 45);
+            this.connectToolStripButton.Text = "Connect";
+            this.connectToolStripButton.TextImageRelation = System.Windows.Forms.TextImageRelation.ImageAboveText;
+            this.connectToolStripButton.Click += new System.EventHandler(this.connectToolStripButton_Click);
             // 
             // FileManagerForm
             // 
@@ -190,6 +206,7 @@
         private System.Windows.Forms.FolderBrowserDialog folderBrowserDialog;
         private System.Windows.Forms.ToolStripButton copyToolStripButton;
         private System.Windows.Forms.ToolStripButton deleteToolStripButton;
+        private System.Windows.Forms.ToolStripButton connectToolStripButton;
     }
 }
 
